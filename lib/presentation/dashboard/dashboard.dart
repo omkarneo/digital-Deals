@@ -23,7 +23,8 @@ class _DashboardState extends State<Dashboard> {
           padding: EdgeInsets.all(8.0),
           child: Text(
             "Digital Deals",
-            style: TextStyle(color: Colors.lightBlue),
+            style:
+                TextStyle(color: Colors.lightBlue, fontWeight: FontWeight.w600),
           ),
         ),
         elevation: 0,

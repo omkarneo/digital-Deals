@@ -11,6 +11,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List cat = [
+    Category("All", true),
+    Category("Smartphone", false),
+    Category("Laptops", false),
+    Category("Headphones", false),
+    Category("SmartWatch", false),
+    Category("Speakers", false),
+  ];
+
   List cardList = [
     Container(
       decoration: const BoxDecoration(
@@ -40,24 +49,26 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
           TextFormField(
             decoration: InputDecoration(
+              filled: true,
+              fillColor: AppColors.greyTextFormfieldColor,
               suffixIcon: const Icon(
                 Icons.search_outlined,
                 color: AppColors.primaryColor,
               ),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25.0),
+                borderRadius: BorderRadius.circular(10.0),
                 borderSide: const BorderSide(
                   width: 3,
                   color: AppColors.primaryColor,
                 ),
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25.0),
+                borderRadius: BorderRadius.circular(10.0),
                 borderSide: const BorderSide(
                   color: AppColors.primaryColor,
                   width: 3.0,
@@ -65,7 +76,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           ClipRRect(
@@ -77,14 +88,8 @@ class _HomePageState extends State<HomePage> {
                   autoPlayInterval: const Duration(seconds: 3),
                   autoPlayAnimationDuration: const Duration(milliseconds: 800),
                   autoPlayCurve: Curves.fastOutSlowIn,
-                  // pauseAutoPlayOnTouch: Duration(seconds: 10),
                   aspectRatio: 1.5,
                   viewportFraction: 1),
-              // onPageChanged: (index) {
-              //   setState(() {
-              //     _currentIndex = index;
-              //   });
-              // },
               items: cardList.map((card) {
                 return Builder(builder: (BuildContext context) {
                   return SizedBox(
@@ -95,10 +100,82 @@ class _HomePageState extends State<HomePage> {
               }).toList(),
             ),
           ),
+          const SizedBox(
+            height: 5,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Category",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                ),
+                Text(
+                  "See all",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                      color: AppColors.primaryColor),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(children: [
+                for (Category i in cat) ...[
+                  (i.isSelected)
+                      ? Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                    width: 1.5, color: AppColors.primaryColor)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                i.name,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                    color: AppColors.primarytextColor),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                // color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(width: 1.5)),
+                            child: Padding(
+                              padding: EdgeInsets.all(10.0),
+                              child: Text(
+                                i.name,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                ]
+              ]),
+            ),
+          ),
           Expanded(
             child: GridView.builder(
               itemCount: 10,
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: (1 / 1), crossAxisCount: 2),
               itemBuilder: (context, index) {
                 return Padding(
@@ -181,4 +258,10 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+class Category {
+  String name;
+  bool isSelected;
+  Category(this.name, this.isSelected);
 }

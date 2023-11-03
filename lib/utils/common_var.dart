@@ -8,6 +8,8 @@ class AppColors {
   static const primarytextColor = Colors.white;
   static const secondaryTextColor = Colors.lightBlue;
 
+  static final greyTextFormfieldColor = Colors.grey.shade200;
+
   static const primaryIconColor = Colors.white;
   static const unSelectedIconColor = Colors.grey;
 }
